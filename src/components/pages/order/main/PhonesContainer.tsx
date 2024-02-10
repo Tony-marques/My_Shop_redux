@@ -3,10 +3,20 @@ import { usePhoneContext } from "../../../../context/PhoneContext";
 import Card from "./Card";
 import { formatPrice } from "../../../../utils/around";
 import { useAdminContext } from "../../../../context/AdminContext";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function PhonesContainer() {
    const { handleSelectedTab, isModeAdmin } = useAdminContext();
-   const { phones, handlePhoneSelected, phoneSelected } = usePhoneContext();
+   const {
+      // phones,
+      handlePhoneSelected,
+      phoneSelected,
+   } = usePhoneContext();
+
+   const { phones } = useSelector((state) => state.phoneReducer);
+   console.log(phones);
+
+   const dispatch = useDispatch();
 
    const handleClick = (id: number | string) => {
       if (!isModeAdmin) return;

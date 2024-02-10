@@ -5,6 +5,8 @@ import { useAdminContext } from "../../../../context/AdminContext";
 import { TiDelete } from "react-icons/ti";
 import { usePhoneContext } from "../../../../context/PhoneContext";
 import { MouseEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePhone, fetchUsers } from "../../../../store/slices/phoneSlice";
 
 interface Props {
    id: number | string;
@@ -32,13 +34,20 @@ export default function Card({
 }: Props) {
    const { isModeAdmin } = useAdminContext();
    const { handleDeletePhone } = usePhoneContext();
+   const dispatch = useDispatch();
+   const phones = useSelector((state) => state.phoneReducer);
+
+   dispatch(fetchUsers("dd"));
 
    const onDelete = (
       event: MouseEvent<HTMLDivElement>,
       id: number | string
    ) => {
       event.stopPropagation();
-      handleDeletePhone(id);
+      // handleDeletePhone(id);
+      console.log(phones.phones);
+
+      dispatch(deletePhone(id));
    };
 
    return (
