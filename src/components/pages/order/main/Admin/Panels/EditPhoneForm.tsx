@@ -8,10 +8,14 @@ import { ChangeEvent } from "react";
 import { usePhoneContext } from "../../../../../../context/PhoneContext";
 import ImagePreview from "./ImagePreview";
 import { theme } from "../../../../../../theme";
+import { useDispatch } from "react-redux";
+import { updatePhone } from "../../../../../../store/slices/phoneSlice";
 
 export default function EditPhoneForm() {
    const { handleEditPhone, isSelectedPhone, phoneSelected, setPhoneSelected } =
       usePhoneContext();
+
+   const dispatch = useDispatch();
 
    const inputsConfig = [
       {
@@ -47,11 +51,12 @@ export default function EditPhoneForm() {
          ...phoneSelected,
          [name]: value,
       };
-      console.log(newPhone);
+      // console.log(newPhone);
       // Update data in form
       setPhoneSelected(newPhone);
-      // setInputs(newPhone);
-      handleEditPhone(newPhone);
+
+      dispatch(updatePhone(newPhone));
+      // handleEditPhone(newPhone);
    };
 
    return (

@@ -7,8 +7,10 @@ import Button from "../../../../../reusable-ui/Button";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Phone } from "../../../../../../interfaces/phone.interface";
 import { usePhoneContext } from "../../../../../../context/PhoneContext";
-import SuccessMessage from "./SuccessMessage";
+import { useDispatch } from "react-redux";
 import ImagePreview from "./ImagePreview";
+import SuccessMessage from "./SuccessMessage";
+import {addPhone} from "../../../../../../store/slices/phoneSlice";
 
 const EMPTY_PHONE = {
    title: "",
@@ -19,6 +21,7 @@ const EMPTY_PHONE = {
 
 export default function AddPhoneForm() {
    const [inputs, setInputs] = useState<Phone>(EMPTY_PHONE);
+   const dispatch = useDispatch();
    const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
    const { handleAddPhone } = usePhoneContext();
 
@@ -61,7 +64,8 @@ export default function AddPhoneForm() {
 
    const handleSubmit = (event: FormEvent) => {
       event.preventDefault();
-      handleAddPhone(inputs);
+      dispatch(addPhone(inputs));
+      // handleAddPhone(inputs);
       setInputs(EMPTY_PHONE);
       setIsSuccessMessage(true);
    };
